@@ -1,0 +1,51 @@
+version: "3.8"
+
+services:
+  db:
+    command: --default-authentication-plugin=mysql_native_password
+    container_name: app-db
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+    image: mysql:8.0
+    ports:
+      - 3306:3306
+    # 開発環境でのdatabaseの永続化
+    # volumes:
+    #   - ./mysql/mysql_data:/var/lib/mysql
+
+  migration:
+    image: flyway/flyway
+    depends_on:
+      - db
+    container_name: app-migration
+    volumes:
+      - ./database/migration/schema:/flyway/sql
+
+  api:
+    container_name: app-api
+    restart: always
+    build:
+      context: ./backend/
+      dockerfile: Dockerfile
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./backend:/usr/src/app
+    depends_on:
+      - db
+
+  frontend:
+    container_name: app-frontend
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    volumes:
+      - "./client:/usr/src/app"
+      - "/usr/src/app/node_modules"
+    ports:
+      - "1234:1234"
+    depends_on:
+      - api
+    environment:
+      - NODE_ENV=development
+      - CHOKIDAR_USEPOLLING=true

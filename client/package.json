@@ -1,0 +1,20 @@
+{
+  "name": "docker-nginx-react-app",
+  "version": "0.1.0",
+  "private": true,
+  "main": "index.tsx",
+  "dependencies": {
+    "react": "^16.4.2",
+    "react-dom": "^16.4.2",
+    "@types/react": "^16.9.48",
+    "@types/react-dom": "^16.9.8"
+  },
+  "devDependencies": {
+    "parcel": "1.12.4",
+    "typescript": "^4.0.2"
+  },
+  "scripts": {
+    "dev": "parcel index.html",
+    "build": "parcel build index.html"
+  }
+}
