@@ -1,16 +1,19 @@
-# base image
-FROM node:14
+# pull official base image
+FROM node:18.19.0
 
 # set working directory
-RUN mkdir /usr/src/app
-WORKDIR /usr/src/app
+WORKDIR /app
 
-# add `/usr/src/app/node_modules/.bin` to $PATH
-ENV PATH /usr/src/app/node_modules/.bin:$PATH
+# add `/app/node_modules/.bin` to $PATH
+ENV PATH /app/node_modules/.bin:$PATH
 
-# install and cache app dependencies
-COPY package.json /usr/src/app/package.json
+# install app dependencies
+COPY package.json ./
+COPY package-lock.json ./
 RUN npm install --silent
 
+# add app
+COPY . ./
+
 # start app
-CMD ["npm", "run", "dev"]
+CMD ["npm", "start"]    

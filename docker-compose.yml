@@ -48,8 +48,6 @@ services:
     volumes:
       - "./client:/usr/src/app"
       - "/usr/src/app/node_modules"
-    ports:
-      - "1234:1234"
     depends_on:
       - flaskapp
     environment:
