@@ -32,9 +32,10 @@ services:
     networks:
       - web_network
       - db_network
-      
+    ports:
+      - 5050:5050
     expose:
-      - 5090
+      - 5050
 
 
   frontend:
