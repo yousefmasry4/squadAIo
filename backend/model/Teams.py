@@ -1,6 +1,4 @@
 import uuid
-import datetime
-
 from model import app, db, bcrypt
 
 
@@ -13,27 +11,29 @@ class Teams(db.Model):
             db.String,
             nullable=False,
         )
-    # team members are a users
-    team_members = db.relationship('User', backref='team', lazy=True)
+    # chalnge: chalnge has many teams but team can select only one chalnge
+    challenge_id = db.Column(db.String, db.ForeignKey('challenges.challenge_id'), nullable=False)
+    challenge = db.relationship('challenges', backref=db.backref('teams-challenges', lazy=True))
+    # team members, team contain list of users
+    team_members = db.relationship('User', backref=db.backref('teams-User', lazy=True), lazy=True)
+
     # team leader
-    team_leader = db.Column(db.String, db.ForeignKey('User.user_id'), nullable=False)
+    team_leader = db.Column(db.String, db.ForeignKey('users.username'), nullable=False)
     # team order
     team_order= db.Column(db.Integer, nullable=True)
-    # selected challenge for the team
-    challenge_id = db.Column(db.String, db.ForeignKey('challenges.challenge_id'), nullable=True)
-    challenge = db.relationship('challenges', backref=db.backref('teams', lazy=True))
-    # hackathon
-    hackathon_id = db.Column(db.String, db.ForeignKey('Hackathon.hackathon_id'), nullable=False)
-    hackathon = db.relationship('Hackathon', backref=db.backref('teams', lazy=True))
-    # CodeSubmissions
-    code_submissions = db.relationship('CodeSubmission', backref='team', lazy=True)
-    
+    # CodeSubmissions: team has only one code submissions
+    code_submissions = db.relationship('CodeSubmission', backref=db.backref('teams-CodeSubmission', lazy=True))
 
-    def __init__(self, team_name, team_description, team_leader, team_order, challenge_id, hackathon_id):
+    # hackathon: hackathon has many teams
+    hackathon_id = db.Column(db.String, db.ForeignKey('Hackathon.hackathon_id'), nullable=False)
+    hackathon = db.relationship('Hackathon', backref=db.backref('teams-Hackathon', lazy=True))
+
+    def __init__(self, team_name, team_description, challenge_id, team_leader, hackathon_id, team_order=None, code_submissions=None):
         self.team_name = team_name
         self.team_description = team_description
-        self.team_leader = team_leader
-        self.team_order = team_order
         self.challenge_id = challenge_id
+        self.team_leader = team_leader
         self.hackathon_id = hackathon_id
+        self.team_order = team_order
+        self.code_submissions = code_submissions
         self.team_id = uuid.uuid4()

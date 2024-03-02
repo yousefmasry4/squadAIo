@@ -21,6 +21,9 @@ if __name__ == '__main__':
     PORT = app.config.get('APP_PORT')
     DEBUG = app.config.get('DEBUG')
 
+
+    # check if database sqlalchemy is set
+
     if args.command:
         if args.command.lower() == 'migrate':
             db.create_all()

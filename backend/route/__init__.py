@@ -23,6 +23,9 @@ from controller import (
     RefreshJWTToken
 )
 
+# check database create or not
+
+
 app.config.update({
     'APISPEC_SPEC': APISpec(
         title='Flask Authentication API',
@@ -46,6 +49,12 @@ ENDPOINT = app.config.get('APP_PREFIX')
 api = Api(app)
 docs = FlaskApiSpec(app)
 
+# This error handler is necessary for usage with Flask-RESTful
+@app.errorhandler(422)
+def handle_request_parsing_error(err):
+    exc = err.exc
+    messages = exc.messages
+    return response_message(422, 'error', 'Validation error', messages)
 
 @app.errorhandler(404)
 def resource_not_found(e):
@@ -79,11 +88,43 @@ docs.register(UpdateUsername)
 api.add_resource(GetUserByName, f'{ENDPOINT}/user', methods=['GET'])
 docs.register(GetUserByName)
 
-api.add_resource(GetHeroName, f'{ENDPOINT}/hero', methods=['GET'])
-docs.register(GetHeroName)
 
-api.add_resource(CheckReferralCode, f'{ENDPOINT}/referral', methods=['POST', 'GET'])
-docs.register(CheckReferralCode)
 
-api.add_resource(ValidateReferralCode, f'{ENDPOINT}/referral/validate', methods=['POST', 'GET'])
-docs.register(ValidateReferralCode)
+# - team routes
+# create team
+
+# get team by id
+
+# get list of teams
+
+# register for team
+
+# get team members
+
+
+
+# - hackathon routes
+# create hackathon
+
+# get hackathon by id
+
+# get list of hackathons
+
+# register for hackathon
+
+# addchallenge to hackathon
+
+
+
+
+# - code submission routes
+# submit code
+
+# get code by id
+
+# get list of codes
+
+# score code
+
+
+

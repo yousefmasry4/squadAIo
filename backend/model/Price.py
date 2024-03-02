@@ -15,8 +15,12 @@ class Price(db.Model):
         )
     price_order = db.Column(db.Integer, nullable=False)
     
+    # hackathon : hackethon  has many prizes
     hackathon_id = db.Column(db.String, db.ForeignKey('Hackathon.hackathon_id'), nullable=False)
-    hackathon = db.relationship('Hackathon', backref=db.backref('prizes', lazy=True))
+    hackathon = db.relationship('Hackathon', backref=db.backref('prizes-Hackathon', lazy=True))
+
+
+
 
     def __init__(self, price_name, price_description, price_order, hackathon_id):
         self.price_name = price_name

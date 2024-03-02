@@ -75,12 +75,12 @@ class Serializers:
             raise ValueError("Invalid email")
 
     def ValidatingRegister(self) -> Union[User, TypeError]:
-
         if isinstance(self.data, dict):
             sorted_json_requests = sorted(self.data.keys())
             required_json_requests = sorted(['username', 'password', 'email', 'name'])
 
-            if sorted_json_requests != required_json_requests:
+            # check if the required fields are in the json request
+            if not set(required_json_requests).issubset(sorted_json_requests):
                 message = f"Please Provide: {', '.join(list(set(required_json_requests).difference(sorted_json_requests)))}"
                 raise ValueError(message)
 
@@ -88,7 +88,14 @@ class Serializers:
                 username=str(self.data.get('username')),
                 password=str(self.data.get('password')),
                 email=self.CheckMail(self.data.get('email')),
-                name=str(self.data.get('name'))
+                name=str(self.data.get('name')),
+                user_type=str(self.data.get('user_type')) if self.data.get('user_type') else 'user',
+                mobile=str(self.data.get('mobile')) if self.data.get('mobile') else None,
+                title=str(self.data.get('title')) if self.data.get('title') else None,
+                redeemed_referral_code=str(self.data.get('redeemed_referral_code')) if self.data.get('redeemed_referral_code') else None,
+                team_id=str(self.data.get('team_id')) if self.data.get('team_id') else None,
+                code_submission_id=str(self.data.get('code_submission_id')) if self.data.get('code_submission_id') else None,
+
             )
 
         raise TypeError("Not a valid json")

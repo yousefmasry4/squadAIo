@@ -15,7 +15,7 @@ class BaseConfig:
     CONN = f'postgresql://{DB_USERNAME}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/'
 
     SECRET_KEY = os.getenv('SECRET_KEY')
-    DEBUG = False
+    DEBUG = True
     BCRYPT_LOG_ROUNDS = 13
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
