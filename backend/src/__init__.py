@@ -32,8 +32,8 @@ else:
 
 
 # Configuration for the 'postgres' default database
-DEFAULT_DATABASE_URL = "postgresql://postgres:postgres@localhost/postgres"
-TARGET_DATABASE_URL = "postgresql://postgres:postgres@localhost/ejada"
+DEFAULT_DATABASE_URL = "postgresql://postgres:postgres@db/postgres"
+TARGET_DATABASE_URL = "postgresql://postgres:postgres@db/ejada"
 
 # Create an engine connected to the default database
 default_engine = create_engine(DEFAULT_DATABASE_URL)
