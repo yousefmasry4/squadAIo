@@ -1,38 +1,41 @@
 version: "3.8"
 
 services:
+
   db:
-    command: --default-authentication-plugin=mysql_native_password
-    container_name: app-db
+    image: postgres:latest
+    volumes:
+      - "./dbdata:/var/lib/postgresql/data"
+    env_file:
+      - .env
+    networks:
+      - db_network
     environment:
-      MYSQL_ROOT_PASSWORD: password
-    image: mysql:8.0
-    ports:
-      - 3306:3306
-    # 開発環境でのdatabaseの永続化
-    # volumes:
-    #   - ./mysql/mysql_data:/var/lib/mysql
+      - POSTGRES_HOST_AUTH_METHOD=trust
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=ejada
 
-  migration:
-    image: flyway/flyway
-    depends_on:
-      - db
-    container_name: app-migration
-    volumes:
-      - ./database/migration/schema:/flyway/sql
-
-  api:
-    container_name: app-api
-    restart: always
-    build:
-      context: ./backend/
+  flaskapp:
+    build: 
+      context: ./backend
       dockerfile: Dockerfile
-    ports:
-      - "5000:5000"
+    restart: always
+    env_file:
+      - .env
     volumes:
-      - ./backend:/usr/src/app
+      - ./backend:/opt/services/flaskapp/src
     depends_on:
       - db
+    links:
+      - db:db
+    networks:
+      - web_network
+      - db_network
+      
+    expose:
+      - 5090
+
 
   frontend:
     container_name: app-frontend
@@ -45,7 +48,31 @@ services:
     ports:
       - "1234:1234"
     depends_on:
-      - api
+      - flaskapp
     environment:
       - NODE_ENV=development
       - CHOKIDAR_USEPOLLING=true
+    links:
+      - flaskapp:flaskapp
+    networks:
+      - web_network
+
+  nginx:
+    image: nginx:latest
+    volumes:
+      - ./conf.d:/etc/nginx/conf.d
+    networks:
+      - web_network
+    ports:
+      - "8080:80"
+    depends_on:
+      - frontend
+
+networks:
+  db_network:
+    driver: bridge
+  web_network:
+    driver: bridge
+
+volumes:
+  dbdata:

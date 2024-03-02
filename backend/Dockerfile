@@ -1,13 +1,17 @@
-FROM python:3.7-alpine
+FROM python:3.9.7
 
-# python-ldap requirements
-RUN apk update && apk add openldap-dev libc-dev gcc g++
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
 
-# psycopg2 requirements
-RUN apk add libpq python3-dev py3-pip musl-dev postgresql-dev
+RUN mkdir -p /opt/services/flaskapp/src
+COPY ./requirements.txt /opt/services/flaskapp/src
+WORKDIR /opt/services/flaskapp/src
 
-COPY ./app/requirements.txt /requirements.txt
-RUN pip install -r /requirements.txt
+RUN pip install --upgrade pip
+RUN pip install -r requirements.txt
 
-COPY ./entrypoint.sh /entrypoint.sh
-ENTRYPOINT [ "/entrypoint.sh" ]
+COPY . /opt/services/flaskapp/src
+
+EXPOSE 5090
+
+CMD gunicorn --worker-class gevent --workers 8 --bind localhost:5050 wsgi:app --max-requests 10000 --timeout 5 --keep-alive 5 --log-level info
