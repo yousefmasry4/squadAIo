@@ -15,13 +15,21 @@ from controller import (
     UpdateUserInformation,
     UpdatePassword,
     UpdateUsername,
-    GetHeroName,
-    ValidateReferralCode,
     GetCurrentUser,
     GetUserByName,
-    CheckReferralCode,
-    RefreshJWTToken
+    RefreshJWTToken,
+    CreateTeam,
+GetTeamById,
+GetTeams,
+GetHackathonById,
+CreateHackathon,
+RegisterForTeam,
+GetHackathons,
+    CreateChallenge
 )
+
+# check database create or not
+
 
 app.config.update({
     'APISPEC_SPEC': APISpec(
@@ -46,6 +54,12 @@ ENDPOINT = app.config.get('APP_PREFIX')
 api = Api(app)
 docs = FlaskApiSpec(app)
 
+# This error handler is necessary for usage with Flask-RESTful
+@app.errorhandler(422)
+def handle_request_parsing_error(err):
+    exc = err.exc
+    messages = exc.messages
+    return response_message(422, 'error', 'Validation error', messages)
 
 @app.errorhandler(404)
 def resource_not_found(e):
@@ -79,11 +93,61 @@ docs.register(UpdateUsername)
 api.add_resource(GetUserByName, f'{ENDPOINT}/user', methods=['GET'])
 docs.register(GetUserByName)
 
-api.add_resource(GetHeroName, f'{ENDPOINT}/hero', methods=['GET'])
-docs.register(GetHeroName)
 
-api.add_resource(CheckReferralCode, f'{ENDPOINT}/referral', methods=['POST', 'GET'])
-docs.register(CheckReferralCode)
 
-api.add_resource(ValidateReferralCode, f'{ENDPOINT}/referral/validate', methods=['POST', 'GET'])
-docs.register(ValidateReferralCode)
+# - team routes
+# create team
+api.add_resource(CreateTeam, f'{ENDPOINT}/team', methods=['POST'])
+docs.register(CreateTeam)
+# get team by id
+api.add_resource(GetTeamById, f'{ENDPOINT}/team/<string:id>', methods=['GET'])
+docs.register(GetTeamById)
+
+# get list of teams
+api.add_resource(GetTeams, f'{ENDPOINT}/teams/<int:page_number>/<int:page_size>', methods=['GET'])
+docs.register(GetTeams)
+
+# register for team
+api.add_resource(RegisterForTeam, f'{ENDPOINT}/team/register', methods=['POST'])
+docs.register(RegisterForTeam)
+
+
+
+
+# - hackathon routes
+# create hackathon
+api.add_resource(CreateHackathon, f'{ENDPOINT}/hackathon', methods=['POST'])
+docs.register(CreateHackathon)
+
+
+
+# get list of hackathons
+api.add_resource(GetHackathons, f'{ENDPOINT}/hackathons/<int:page_number>/<int:page_size>', methods=['GET'])
+docs.register(GetHackathons)
+
+# get hackathon by id where id is uuid
+api.add_resource(GetHackathonById, f'{ENDPOINT}/hackathon/<string:id>', methods=['GET'])
+docs.register(GetHackathonById)
+
+# add challenge to hackathon
+api.add_resource(CreateChallenge, f'{ENDPOINT}/hackathon/challenge', methods=['POST'])
+docs.register(CreateChallenge)
+
+
+
+
+# - code submission routes
+# submit code
+# api.add_resource(SubmitCode, f'{ENDPOINT}/code', methods=['POST'])
+
+# get code by id
+# api.add_resource(GetCodeById, f'{ENDPOINT}/code/<int:id>', methods=['GET'])
+
+# get list of codes
+# api.add_resource(GetCodes, f'{ENDPOINT}/codes', methods=['GET'])
+
+# score code
+# api.add_resource(ScoreCode, f'{ENDPOINT}/code/score', methods=['POST'])
+
+
+
