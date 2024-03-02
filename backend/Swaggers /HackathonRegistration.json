@@ -1,0 +1,179 @@
+{
+	"swagger": "2.0",
+	"info": {
+		"title": "Register Hackathon hackathon API",
+		"description": "This API will register new hackathon in the system.",
+		"version": "1.0"
+	},
+	"host": "34.254.168.73:7882",
+	"schemes": [
+		"https"
+	],
+	"basePath": "/v1/hackathon",
+	"paths": {
+		"/register": {
+			"post": {
+				"tags": [
+					"Hackathon"
+				],
+				"operationId": "register-hackathon",
+				"consumes": [
+					"application/json",
+					"text/json"
+				],
+				"produces": [
+					"application/json",
+					"text/json"
+				],
+				"parameters": [
+					{
+						"name": "input",
+						"in": "body",
+						"required": true,
+						"schema": {
+							"$ref": "#/definitions/hackathonRegistrationRq"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"schema": {
+							"$ref": "#/definitions/hackathonRegistrationRs"
+						}
+					},
+					"400": {
+						"description": "BadRequest",
+						"schema": {
+							"$ref": "#/definitions/errorReply"
+						}
+					},
+					"401": {
+						"description": "Unauthorized",
+						"schema": {
+							"$ref": "#/definitions/errorReply"
+						}
+					},
+					"403": {
+						"description": "Forbidden",
+						"schema": {
+							"$ref": "#/definitions/errorReply"
+						}
+					},
+					"404": {
+						"description": "Not Found",
+						"schema": {
+							"$ref": "#/definitions/errorReply"
+						}
+					},
+					"500": {
+						"description": "InternalServerError",
+						"schema": {
+							"$ref": "#/definitions/errorReply"
+						}
+					}
+				}
+			}
+		}
+	},
+	"definitions": {
+		"hackathonRegistrationRq": {
+			"type": "object",
+			"required": [
+				"mobileNumber",
+				"passCode"
+			],
+			"properties": {
+				"Name": {
+					"type": "string",
+					"description": "The hackathon register Name, if not sent then default value is 'REGISTER_hackathon'",
+					"example": "REGISTER_hackathon"
+				},
+				"Theme": {
+					"type": "string",
+					"description": "The hackathon Theme, if not sent then default value is 'AI_Hackathon'",
+					"example": "IOT_hackathon"
+				},
+				"EventDate": {
+					"type": "string",
+					"description": "Event date",
+					"example": "02-Mar-2024"
+				},
+				"RegistrationStartDate": {
+					"type": "string",
+					"description": "registration tartdate",
+					"example": "02-Mar-2024"
+				},
+				"RegistrationEndDate": {
+					"type": "string",
+					"description": "registration end date",
+					"example": "02-Mar-2024"
+				},
+				"ListOfChallenges": {
+					"type": "string",
+					"description": "List Of Challenges",
+					"example": "Todo list"
+				},
+				"TeamSize": {
+					"type": "string",
+					"maxLength": 4,
+					"minLength": 4,
+					"pattern": "^([0-9]{2})$",
+					"description": "teamSize",
+					"example": "20"
+				}
+			}
+		},
+		"hackathonRegistrationRs": {
+			"type": "object",
+			"properties": {
+				"header": {
+					"$ref": "#/definitions/header"
+				},
+				"body": {
+					"$ref": "#/definitions/hackathonRegistrationResponseBody"
+				}
+			}
+		},
+		"hackathonRegistrationResponseBody": {
+			"type": "object",
+			"properties": {
+				"partyId": {
+					"type": "string",
+					"example": "123456"
+				}
+			}
+		},
+		"header": {
+			"type": "object",
+			"properties": {
+				"requestId": {
+					"type": "string",
+					"format": "uuid",
+					"example": "6390cc30-16d9-11eb-adc1-0242ac120002"
+				},
+				"status": {
+					"type": "object",
+					"properties": {
+						"code": {
+							"type": "string",
+							"example": "I000000"
+						},
+						"description": {
+							"type": "string",
+							"example": "Success"
+						}
+					}
+				}
+			}
+		},
+		"errorReply": {
+			"type": "object",
+			"properties": {
+				"header": {
+					"$ref": "#/definitions/header"
+				}
+			}
+		}
+	}
+}
