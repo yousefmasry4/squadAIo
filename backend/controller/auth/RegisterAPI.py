@@ -29,7 +29,12 @@ class RegisterAPI(MethodResource):
     @use_kwargs(RegisterRequest, location='json')
     @marshal_with(RequestResponse)
     def post(self, **kwargs):
+        # check by username and email
         user = User.query.filter_by(username=kwargs.get('username')).first()
+        if not user:
+            user = User.query.filter_by(email=kwargs.get('email')).first()
+
+
         print(Serializers(kwargs).data)
         try:
             if not user:

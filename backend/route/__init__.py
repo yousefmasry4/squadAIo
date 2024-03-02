@@ -15,12 +15,17 @@ from controller import (
     UpdateUserInformation,
     UpdatePassword,
     UpdateUsername,
-    GetHeroName,
-    ValidateReferralCode,
     GetCurrentUser,
     GetUserByName,
-    CheckReferralCode,
-    RefreshJWTToken
+    RefreshJWTToken,
+    CreateTeam,
+GetTeamById,
+GetTeams,
+GetHackathonById,
+CreateHackathon,
+RegisterForTeam,
+GetHackathons,
+    CreateChallenge
 )
 
 # check database create or not
@@ -92,39 +97,57 @@ docs.register(GetUserByName)
 
 # - team routes
 # create team
-
+api.add_resource(CreateTeam, f'{ENDPOINT}/team', methods=['POST'])
+docs.register(CreateTeam)
 # get team by id
+api.add_resource(GetTeamById, f'{ENDPOINT}/team/<string:id>', methods=['GET'])
+docs.register(GetTeamById)
 
 # get list of teams
+api.add_resource(GetTeams, f'{ENDPOINT}/teams/<int:page_number>/<int:page_size>', methods=['GET'])
+docs.register(GetTeams)
 
 # register for team
+api.add_resource(RegisterForTeam, f'{ENDPOINT}/team/register', methods=['POST'])
+docs.register(RegisterForTeam)
 
-# get team members
 
 
 
 # - hackathon routes
 # create hackathon
+api.add_resource(CreateHackathon, f'{ENDPOINT}/hackathon', methods=['POST'])
+docs.register(CreateHackathon)
 
-# get hackathon by id
+
 
 # get list of hackathons
+api.add_resource(GetHackathons, f'{ENDPOINT}/hackathons/<int:page_number>/<int:page_size>', methods=['GET'])
+docs.register(GetHackathons)
 
-# register for hackathon
+# get hackathon by id where id is uuid
+api.add_resource(GetHackathonById, f'{ENDPOINT}/hackathon/<string:id>', methods=['GET'])
+docs.register(GetHackathonById)
 
-# addchallenge to hackathon
+# add challenge to hackathon
+api.add_resource(CreateChallenge, f'{ENDPOINT}/hackathon/challenge', methods=['POST'])
+docs.register(CreateChallenge)
 
 
 
 
 # - code submission routes
 # submit code
+# api.add_resource(SubmitCode, f'{ENDPOINT}/code', methods=['POST'])
 
 # get code by id
+# api.add_resource(GetCodeById, f'{ENDPOINT}/code/<int:id>', methods=['GET'])
 
 # get list of codes
+# api.add_resource(GetCodes, f'{ENDPOINT}/codes', methods=['GET'])
 
 # score code
+# api.add_resource(ScoreCode, f'{ENDPOINT}/code/score', methods=['POST'])
 
 
 

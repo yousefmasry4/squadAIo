@@ -34,3 +34,48 @@ class Hackathon(db.Model):
         self.event_start = event_start
         self.event_end = event_end
         self.hackathon_id = uuid.uuid4()
+
+    def __repr__(self):
+        return f"Hackathon('{self.hackathon_name}', '{self.hackathon_theme}', '{self.reg_start}', '{self.reg_end}', '{self.event_start}', '{self.event_end}')"
+    def to_dict(self):
+        return {
+            'hackathon_id': self.hackathon_id,
+            'hackathon_name': self.hackathon_name,
+            'hackathon_theme': self.hackathon_theme,
+            'reg_start': self.reg_start,
+            'reg_end': self.reg_end,
+            'event_start': self.event_start,
+            'event_end': self.event_end,
+            'challenges': [challenge.to_dict() for challenge in self.challenges],
+            'prizes': [prize.to_dict() for prize in self.prizes],
+            'teams': [team.to_dict() for team in self.teams]
+
+        }
+
+#     make it json serializable
+    def to_json(self):
+        return {
+            'hackathon_id': self.hackathon_id,
+            'hackathon_name': self.hackathon_name,
+            'hackathon_theme': self.hackathon_theme,
+            'reg_start': self.reg_start,
+            'reg_end': self.reg_end,
+            'event_start': self.event_start,
+            'event_end': self.event_end,
+            # 'challenges': [challenge.to_json() for challenge in self.challenges],
+            # 'prizes': [prize.to_json() for prize in self.prizes],
+            # 'teams': [team.to_json() for team in self.teams]
+
+        }
+
+    def to_json(self):
+        return {
+            'hackathon_id':str(self.hackathon_id),
+            'hackathon_name': self.hackathon_name,
+            'hackathon_theme': self.hackathon_theme,
+            'reg_start': self.reg_start,
+            'reg_end': self.reg_end,
+            'event_start': self.event_start,
+            'event_end': self.event_end,
+
+        }

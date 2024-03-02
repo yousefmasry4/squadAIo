@@ -27,3 +27,12 @@ class challenges(db.Model):
         self.challenge_description = challenge_description
         self.hackathon_id = hackathon_id
         self.challenge_id = uuid.uuid4()
+
+    def to_dict(self):
+        return {
+            'challenge_id': self.challenge_id,
+            'challenge_name': self.challenge_name,
+            'challenge_description': self.challenge_description,
+            'hackathon_id': self.hackathon_id,
+            'teams': [team.to_dict() for team in self.teams]
+        }

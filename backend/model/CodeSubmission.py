@@ -28,4 +28,14 @@ class CodeSubmission(db.Model):
         self.score = score
         self.score_by = score_by
         self.code_submission_id = uuid.uuid4()
+
+    def to_dict(self):
+        return {
+            'code_submission_id': self.code_submission_id,
+            'code_submission_date': self.code_submission_date,
+            'code_submission_file': self.code_submission_file,
+            'team_id': self.team_id,
+            'score': self.score,
+            'score_by': self.score_by
+        }
     

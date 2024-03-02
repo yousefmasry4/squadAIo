@@ -26,7 +26,7 @@ class User(db.Model):
     last_logged_out = db.Column(db.DateTime, nullable=True)
 
     # one user only in one team
-    team = db.relationship('Teams', backref=db.backref('users-Teams', lazy=True))
+    team = db.relationship('Teams', backref=db.backref('users-Teams', lazy=True,uselist=False))
 
     # one user only can score code 
     code_submission_id = db.Column(db.String, db.ForeignKey('CodeSubmission.code_submission_id'), nullable=True)
@@ -54,3 +54,20 @@ class User(db.Model):
             raise ValueError('Title is required for user type')
     def __repr__(self):
         return f'<username: {self.username} email: {self.email} name: {self.name} user_type: {self.user_type}'
+
+    def to_dict(self):
+        return {
+            'username': self.username,
+            'email': self.email,
+            'mobile': self.mobile,
+            'title': self.title,
+            'name': self.name,
+            'referral_code': self.referral_code,
+            'registered_on': self.registered_on,
+            'redeemed_referral_code': self.redeemed_referral_code,
+            'user_type': self.user_type,
+            'last_logged_in': self.last_logged_in,
+            'last_logged_out': self.last_logged_out,
+            'team_id': self.team_id,
+            'code_submission_id': self.code_submission_id
+        }

@@ -28,3 +28,12 @@ class Price(db.Model):
         self.price_order = price_order
         self.hackathon_id = hackathon_id
         self.price_id = uuid.uuid4()
+
+    def to_dict(self):
+        return {
+            'price_id': self.price_id,
+            'price_name': self.price_name,
+            'price_description': self.price_description,
+            'price_order': self.price_order,
+            'hackathon_id': self.hackathon_id
+        }
