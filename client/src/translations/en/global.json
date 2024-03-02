@@ -1,0 +1,60 @@
+{
+    "squadalo": "SquadAlo",
+    "login": "Login",
+    "username": "Enter Username",
+    "log-in": "Log in",
+    "register": "Sign Up",
+    "admin-login": "Login as Admin",
+
+    "register-free": "Sign up is free!",
+    "first-name": "First Name",
+    "last-name": "Last Name",
+    "email": "Email Address",
+    "password": "Enter Password",
+    "password2": "Re-enter Password",
+    "gender": "Select Gender",
+    "male": "Male",
+    "female": "Female",
+
+    "hackathon-list": "Hackathons List",
+    "load": "Load More",
+
+    "theme": "Theme",
+    "period": "Registration Period",
+    "date": "Event Date",
+    "titles": "Challenge Titles",
+    "size": "Max Team Size",
+    "number": "Max Number of Teams",
+    "register2": "Register to Hackathon",
+
+    "team": "Team Name",
+    "hackathon": "Hackathon Name",
+    "challenge": "Selected Challenge",
+    "challenge2": "Select Challenge",
+    "member": "Member",
+    "title": "Title",
+    "name": "Name",
+    "id": "ID",
+    "mobile": "Mobile",
+    "add-member": "Add Member",
+
+    "teams": "Registered Teams",
+    "to": "to",
+
+    "add-hackathon": "Add New Hackathon",
+    "start-date": "Start Registration Date",
+    "end-date": "End Registration Date",
+    "commas": "Challenge Titles (split by ,)",
+    "submit": "Submit",
+
+    "view-hackathon": "View Hackathons",
+    "signout": "Sign Out"
+
+
+
+
+    
+
+
+
+}

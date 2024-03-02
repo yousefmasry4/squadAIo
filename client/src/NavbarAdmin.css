@@ -1,0 +1,55 @@
+.navbar {
+    background-color: #001081; /* Updated main color */
+    padding: 10px;
+    display: flex;
+    align-items: center; /* Align items vertically */
+    justify-content: space-between; /* Spread items horizontally */
+  }
+  
+  .logo-placeholder {
+    color: white;
+    font-weight: bold; /* Example styling for logo placeholder */
+  }
+  
+  .nav-menu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    align-items: center; /* Align items vertically */
+  }
+  
+  .nav-item {
+    margin-right: 20px;
+    color: white;
+    cursor: pointer;
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  .nav-item:hover {
+    transform: scale(1.1);
+  }
+  
+  .signout-button {
+    margin-left: 2px; /* Adjust spacing between navbar items and signout button */
+  }
+  
+  .signout-button button {
+    background-color: transparent;
+    border: 1px solid white;
+    color: white;
+    padding: 5px 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .signout-button button:hover {
+    background-color: white;
+    color: #001081;
+  }
+  
+  /* Add padding to the form */
+  form {
+    padding: 20px;
+  }
+  

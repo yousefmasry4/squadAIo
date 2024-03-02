@@ -10,6 +10,8 @@ services:
       - .env
     networks:
       - db_network
+    ports:
+      - "5432:5432"
     environment:
       - POSTGRES_HOST_AUTH_METHOD=trust
       - POSTGRES_USER=postgres
@@ -32,9 +34,10 @@ services:
     networks:
       - web_network
       - db_network
-      
+    ports:
+      - 5050:5050
     expose:
-      - 5090
+      - 5050
 
 
   frontend:
@@ -45,8 +48,6 @@ services:
     volumes:
       - "./client:/usr/src/app"
       - "/usr/src/app/node_modules"
-    ports:
-      - "1234:1234"
     depends_on:
       - flaskapp
     environment:
