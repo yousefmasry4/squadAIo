@@ -3,17 +3,47 @@ import img from "./image.png";
 import Nav from "./NavbarLogin";
 import { Link, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import axios from "axios"
+
 function LoginPage() {
   const navigate = useNavigate();
   const [t, i18n] = useTranslation("global");
-
+  const [username, setUsername] = React.useState("");
+  const [password, setPassword] = React.useState("");
   // Function to handle form submission
-  const handleLogin = () => {
+  const handleLogin = async () => {
     // Perform login logic here
     // Assuming you have userType and credentials variables
 
+    
+      var data = JSON.stringify({
+        "password": "1234567",
+        "username": "string2"
+      });
+      
+      var config = {
+        method: 'post',
+        url: 'http://localhost:5050/api/auth/login',
+        headers: { 
+          'Content-Type': 'application/json',
+          // origin 
+          'Accept': '*/*',
+          'Access-Control-Allow-Origin': '*'
+        },
+        data : data
+      };
+      
+      axios(config)
+      .then(function (response) {
+        console.log(JSON.stringify(response.data));
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+      
     const userType = "competitor"; // Example user type
     const credentials = { username: "admin", password: "password" }; // Example credentials
+
 
     // Navigate to the Hackathon List page and pass userType and credentials as state
     navigate("/hackathon-list", { state: { userType, credentials } });
@@ -42,6 +72,8 @@ function LoginPage() {
                   type="text"
                   className="form-control"
                   placeholder={t("username")}
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
                 />
               </div>
               <div className="form-group mb-4">
@@ -50,6 +82,8 @@ function LoginPage() {
                   type="password"
                   className="form-control"
                   placeholder={t("password")}
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                   
                 />
               </div>
