@@ -1,0 +1,7 @@
+static
+templates
+venv
+__pycache__
+.DS_Store
+.idea
+.vscode
