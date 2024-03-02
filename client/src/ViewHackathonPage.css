@@ -1,0 +1,22 @@
+.hackathon-card {
+  background-color: #f8f9fa;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+}
+
+.hackathon-card .card-title {
+  font-size: 28px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.hackathon-card .card-text {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.hackathon-card .card-text strong {
+  font-weight: bold;
+  margin-right: 5px;
+}
